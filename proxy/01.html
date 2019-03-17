@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>反向代理跨域</title>
+		<style>
+			span#prompt{
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div id="entry">
+				手机号:<input type="text" id="phone" />
+				密码:<input type="text" id="pwd" />
+				<button type="button" id="btn">添加</button>
+				<span id="prompt"></span>
+			</div>
+		</div>
+		<script>
+			var btn=document.getElementById("btn");
+			var phone=document.getElementById("phone");
+			var pwd=document.getElementById("pwd");
+			var prompt=document.getElementById("prompt");
+			
+			btn.onclick=function(){
+				var ph=phone.value;
+				var pw=pwd.value;
+				if(ph&&pw){
+					var xhr=new XMLHttpRequest();
+					//xhr.open("post","http://127.0.0.1:81/addPost");
+					xhr.open("post","/addPost");
+					xhr.setRequestHeader("content-type","application/x-www-form-urlencoded")
+					xhr.send("phone="+ph+"&pwd="+pw);
+					xhr.onreadystatechange=function(){
+						if(xhr.readyState==4&&xhr.status==200){
+							var str=xhr.responseText;
+							console.log("str:",str);
+						}
+					}
+				}
+			}
+		</script>
+	</body>
+</html>
